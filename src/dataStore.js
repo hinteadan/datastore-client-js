@@ -180,7 +180,9 @@
         chainBy: chainOperation,
         is: operator,
         OperationResult: OperationResult,
-        Query: Query
+        Query: Query,
+        queryWithAnd: function () { return new Query(chainOperation.And); },
+        queryWithOr: function () { return new Query(chainOperation.Or); }
     };
     if (!this.ds) {
         this.ds = this.H.DataStore;
