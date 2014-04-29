@@ -13,7 +13,8 @@ module.exports = function (grunt) {
                         src: [
                             '.tmp',
                             'build/*',
-                            '!build/.git*'
+                            '!build/.git*',
+                            '!build/README.md'
                         ]
                     }
                 ]
