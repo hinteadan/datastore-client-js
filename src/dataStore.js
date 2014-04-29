@@ -173,7 +173,8 @@
         this.Delete = deleteEntity;
     }
 
-    this.DataStore = {
+    this.H = this.H || {};
+    this.H.DataStore = {
         Store: HttpDataStore,
         Entity: Entity,
         chainBy: chainOperation,
@@ -182,7 +183,7 @@
         Query: Query
     };
     if (!this.ds) {
-        this.ds = this.DataStore;
+        this.ds = this.H.DataStore;
     }
 
 }).call(this, this.jQuery, this.JSON);
