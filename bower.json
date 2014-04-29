@@ -1,0 +1,27 @@
+{
+  "name": "datastore-client-js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/hinteadan/datastore-client-js",
+  "authors": [
+    "Hintea Dan Alexandru <hintea_dan@yahoo.co.uk>"
+  ],
+  "description": "HTTP DataStore JS Client",
+  "main": "src/dataStore.js",
+  "keywords": [
+    "datastore",
+    "client",
+    "http"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "json3": "~3.3.1"
+  }
+}

@@ -26,6 +26,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: [
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/json3/lib/json3.js',
 					'src/dataStore.js'
 				],
                 dest: 'build/h.dataStore.js',
@@ -60,3 +62,4 @@ module.exports = function (grunt) {
         'build',
     ]);
 };
+

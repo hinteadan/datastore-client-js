@@ -1,4 +1,4 @@
-﻿(function ($, undefined) {
+﻿(function ($, JSON, undefined) {
     'use strict';
 
     var chainOperation = {
@@ -185,4 +185,4 @@
         this.ds = this.DataStore;
     }
 
-}).call(this, this.jQuery);
+}).call(this, this.jQuery, this.JSON);
