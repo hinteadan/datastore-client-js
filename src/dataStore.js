@@ -113,6 +113,9 @@
         }
 
         function loadEntity(id, callback) {
+            if (!id) {
+                throw new Error('No Entity ID');
+            }
             doHttpRequest(storeUrl + storeName + id, 'GET', undefined,
                 function (entityData) {
                     var entity = new Entity(entityData.Data, entityData.Meta);
@@ -126,6 +129,9 @@
 
         function saveEntity(entity, callback) {
             /// <param name='entity' type='Entity' />
+            if (!entity) {
+                throw new Error('No Entity to save');
+            }
             doHttpRequest(storeUrl + storeName, 'PUT', entity,
                 function (id) {
                     entity.Id = id;
@@ -137,6 +143,9 @@
         }
 
         function queryMetaData(query, callback) {
+            if (!query) {
+                throw new Error('No query provided');
+            }
             doHttpRequest(storeUrl + 'meta/' + storeName + '?' + query, 'GET', undefined,
                 function (queryResult) {
                     doCallback(callback, [new OperationResult(true, null, queryResult)]);
@@ -147,6 +156,9 @@
         }
 
         function queryData(query, callback) {
+            if (!query) {
+                throw new Error('No query provided');
+            }
             doHttpRequest(storeUrl + storeName + '?' + query, 'GET', undefined,
                 function (queryResult) {
                     doCallback(callback, [new OperationResult(true, null, queryResult)]);
