@@ -68,9 +68,17 @@
 
     function Entity(data, meta) {
         this.Id = null;
+        this.CheckTag = null;
         this.Meta = meta || {};
         this.Data = data || null;
     }
+    Entity.fromDto = function (dto) {
+        /// <returns type='Entity' />
+        var entity = new Entity(dto.Data, dto.Meta);
+        entity.Id = dto.Id;
+        entity.CheckTag = dto.CheckTag;
+        return entity;
+    };
 
     function OperationResult(isSuccess, reason, data) {
         this.isSuccess = isSuccess === true ? true : false;
@@ -119,9 +127,7 @@
             var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName + id, 'GET', undefined,
                 function (entityData) {
-                    var entity = new Entity(entityData.Data, entityData.Meta);
-                    entity.Id = entityData.Id;
-                    doCallback(promiseToDoThis, [new OperationResult(true, null, entity)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, Entity.fromDto(entityData))]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
                     doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
@@ -141,8 +147,9 @@
             }
             var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName, 'PUT', entity,
-                function (id) {
-                    entity.Id = id;
+                function (entityData) {
+                    entity.Id = entityData.Id;
+                    entity.CheckTag = entityData.CheckTag;
                     doCallback(promiseToDoThis, [new OperationResult(true, null, entity)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
@@ -183,7 +190,7 @@
             var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName + '?' + query, 'GET', undefined,
                 function (queryResult) {
-                    doCallback(promiseToDoThis, [new OperationResult(true, null, queryResult)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, map(queryResult, Entity.fromDto))]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
                     doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
