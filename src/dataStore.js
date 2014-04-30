@@ -116,15 +116,22 @@
             if (!id) {
                 throw new Error('No Entity ID');
             }
+            var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName + id, 'GET', undefined,
                 function (entityData) {
                     var entity = new Entity(entityData.Data, entityData.Meta);
                     entity.Id = entityData.Id;
-                    doCallback(callback, [new OperationResult(true, null, entity)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, entity)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
-                    doCallback(callback, [new OperationResult(false, errorThrown)]);
+                    doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
                 });
+
+            return {
+                then: function (doThis) {
+                    promiseToDoThis = doThis;
+                }
+            };
         }
 
         function saveEntity(entity, callback) {
@@ -132,50 +139,81 @@
             if (!entity) {
                 throw new Error('No Entity to save');
             }
+            var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName, 'PUT', entity,
                 function (id) {
                     entity.Id = id;
-                    doCallback(callback, [new OperationResult(true, null, entity)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, entity)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
-                    doCallback(callback, [new OperationResult(false, errorThrown)]);
+                    doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
                 });
+            
+            return {
+                then: function (doThis) {
+                    promiseToDoThis = doThis;
+                }
+            };
         }
 
         function queryMetaData(query, callback) {
             if (!query) {
                 throw new Error('No query provided');
             }
+            var promiseToDoThis = callback;
             doHttpRequest(storeUrl + 'meta/' + storeName + '?' + query, 'GET', undefined,
                 function (queryResult) {
-                    doCallback(callback, [new OperationResult(true, null, queryResult)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, queryResult)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
-                    doCallback(callback, [new OperationResult(false, errorThrown)]);
+                    doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
                 });
+
+            return {
+                then: function (doThis) {
+                    promiseToDoThis = doThis;
+                }
+            };
         }
 
         function queryData(query, callback) {
             if (!query) {
                 throw new Error('No query provided');
             }
+            var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName + '?' + query, 'GET', undefined,
                 function (queryResult) {
-                    doCallback(callback, [new OperationResult(true, null, queryResult)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, queryResult)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
-                    doCallback(callback, [new OperationResult(false, errorThrown)]);
+                    doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
                 });
+
+            return {
+                then: function (doThis) {
+                    promiseToDoThis = doThis;
+                }
+            };
         }
 
         function deleteEntity(id, callback) {
+            if (!id) {
+                throw new Error('No Entity ID');
+            }
+            var promiseToDoThis = callback;
             doHttpRequest(storeUrl + storeName + id, 'DELETE', undefined,
                 function () {
-                    doCallback(callback, [new OperationResult(true, null, undefined)]);
+                    doCallback(promiseToDoThis, [new OperationResult(true, null, undefined)]);
                 },
                 function (jqXHR, textStatus, errorThrown) {
-                    doCallback(callback, [new OperationResult(false, errorThrown)]);
+                    doCallback(promiseToDoThis, [new OperationResult(false, errorThrown)]);
                 });
+
+            return {
+                then: function (doThis) {
+                    promiseToDoThis = doThis;
+                }
+            };
         }
 
         this.Save = saveEntity;
