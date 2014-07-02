@@ -230,9 +230,29 @@
         this.Delete = deleteEntity;
     }
 
+    function HttpBlobStore(url)
+    {
+    	var storeUrl = url || 'http://localhost/HttpDataStore/',
+    		storeName = 'blob/',
+    		store = new HttpDataStore(storeName, storeUrl);
+
+    	function generateBlobUrl(id) {
+    		return storeUrl + storeName + '/' + id;
+    	}
+
+    	function generateUploadUrl(){
+    		return storeUrl + storeName;
+    	}
+
+    	this.Query = store.Query;
+    	this.UrlFor = generateBlobUrl;
+    	this.UploadUrl = generateUploadUrl;
+    }
+
     this.H = this.H || {};
     this.H.DataStore = {
-        Store: HttpDataStore,
+    	Store: HttpDataStore,
+		BlobStore: HttpBlobStore,
         Entity: Entity,
         chainBy: chainOperation,
         is: operator,
