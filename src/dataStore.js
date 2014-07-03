@@ -237,7 +237,7 @@
     		store = new HttpDataStore(storeName, storeUrl);
 
     	function generateBlobUrl(id) {
-    		return storeUrl + storeName + '/' + id;
+    		return storeUrl + storeName + id;
     	}
 
     	function generateUploadUrl(){
