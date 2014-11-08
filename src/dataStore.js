@@ -36,12 +36,16 @@
             chain = chainWith || chainOperation.And,
             parameters = [];
 
-        function Parameter(name, operator, value){
+        function Parameter(name, operator, value) {
+            var isNegated = false;
             this.name = name;
             this.operator = operator;
             this.value = value;
+            this.not = function () {
+                isNegated = !isNegated;
+            };
             this.toString = function () {
-                return name + '=' + operator.value + ':' + value;
+                return name + '=' + (isNegated ? '!' : '') + operator.value + ':' + value;
             };
         }
 
