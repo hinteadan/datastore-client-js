@@ -1,9 +1,10 @@
-﻿(function ($, JSON, undefined) {
+(function ($, JSON, undefined) {
     'use strict';
 
     var chainOperation = {
-            And: { id: 0, value: 'And' },
-            Or: { id: 1, value: 'Or' }
+            None: { id: 0, value: 'None' },
+            And: { id: 1, value: 'And' },
+            Or: { id: 2, value: 'Or' }
         },
         operator = {
             EqualTo: { id: 0, value: 'Equals' },
@@ -33,7 +34,7 @@
     function Query(chainWith) {
 
         var self = this,
-            chain = chainWith || chainOperation.And,
+            chain = chainWith || chainOperation.None,
             parameters = [];
 
         function Parameter(name, operator, value){
@@ -258,6 +259,7 @@
         is: operator,
         OperationResult: OperationResult,
         Query: Query,
+        queryWithNone: function () { return new Query(chainOperation.None); },
         queryWithAnd: function () { return new Query(chainOperation.And); },
         queryWithOr: function () { return new Query(chainOperation.Or); }
     };
