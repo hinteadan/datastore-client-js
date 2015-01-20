@@ -37,12 +37,18 @@
             chain = chainWith || chainOperation.None,
             parameters = [];
 
-        function Parameter(name, operator, value){
+        function Parameter(name, operator, value) {
+            var self = this,
+                isNegated = false;
             this.name = name;
             this.operator = operator;
             this.value = value;
+            this.not = function () {
+                isNegated = !isNegated;
+                return self;
+            };
             this.toString = function () {
-                return name + '=' + operator.value + ':' + value;
+                return name + '=' + (isNegated ? '!' : '') + operator.value + ':' + value;
             };
         }
 
@@ -50,6 +56,15 @@
             return function (operator) {
                 return function (value) {
                     parameters.push(new Parameter(name, operator, value));
+                    return self;
+                };
+            };
+        }
+
+        function addNegatedparameter(name) {
+            return function (operator) {
+                return function (value) {
+                    parameters.push(new Parameter(name, operator, value).not());
                     return self;
                 };
             };
@@ -64,6 +79,7 @@
         }
 
         this.where = addParameter;
+        this.whereNot = addNegatedparameter;
         this.toString = convertToQueryString;
     }
 
