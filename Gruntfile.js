@@ -32,12 +32,24 @@ module.exports = function (grunt) {
 					'src/dataStore.js'
 				],
                 dest: 'build/h.dataStore.js',
+            },
+            distRealtime: {
+                src: [
+                    'bower_components/signalr/jquery.signalR.js',
+					'src/realtime.js'
+                ],
+                dest: 'build/h.dataStore.realtime.js',
             }
         },
         uglify:{
             dist: {
                 files: {
                     'build/h.dataStore.min.js': ['build/h.dataStore.js']
+                }
+            },
+            distRealtime: {
+                files: {
+                    'build/h.dataStore.realtime.min.js': ['build/h.dataStore.realtime.js']
                 }
             }
         },
@@ -55,7 +67,9 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'concat:dist',
-        'uglify:dist'
+        'concat:distRealtime',
+        'uglify:dist',
+        'uglify:distRealtime'
     ]);
 
     grunt.registerTask('default', [
